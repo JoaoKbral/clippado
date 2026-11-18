@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connecting account</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<h1>Connecting your account…</h1>
+<p id="msg" class="muted">Sending the authorization back to clipwatcher on this computer.</p>
+<script>
+  // TikTok only redirects to https pages: forward the code to the local `clipwatcher auth` server.
+  // Nothing is stored or sent anywhere else. Keep the port equal to [publish] oauth_port.
+  var PORT = 8765;
+  var q = window.location.search;
+  if (q.indexOf("code=") !== -1 || q.indexOf("error=") !== -1) {
+    window.location.replace("http://127.0.0.1:" + PORT + "/callback" + q);
+  } else {
+    document.getElementById("msg").textContent = "No authorization code in this link.";
+  }
+</script>
+</body></html>
